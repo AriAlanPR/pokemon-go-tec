@@ -12,6 +12,8 @@ var (
 	DBConn *gorm.DB
 )
 
+//"https://github.com/AriAlanPR/pokemon-go-tec.git"
+
 func Init() {
 	var err error
 	dsn := "root:1234@tcp(127.0.0.1:3306)/pokemon?charset=utf8mb4&parseTime=True&loc=Local"

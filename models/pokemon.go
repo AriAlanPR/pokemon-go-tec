@@ -1,34 +1,30 @@
 package models
 
 import (
+	"gofiber/database"
 	"gofiber/pokemon"
 )
 
 type Pokemon pokemon.Pokemon
 
-var pokemons []Pokemon = []Pokemon{
-	{
-		Name: "Charmander", Type: "Fire", Attack: 5, HP: 100, Defense: 10,
-	},
-	{
-		Name: "Bulbasaur", Type: "Grass", Attack: 10, HP: 100, Defense: 10,
-	},
-}
-
 func GetAllPokemons() []Pokemon {
+	dbconn := database.DBConn
+	var pokemons []Pokemon
+	dbconn.Find(&pokemons)
 	return pokemons
 }
 
-func GetPokemon(name string) Pokemon {
-	for _, p := range pokemons {
-		if p.Name == name {
-			return p
-		}
-	}
+func GetPokemon(id string) Pokemon {
+	dbconn := database.DBConn
+	var pokemon Pokemon
+	dbconn.Find(&pokemon, id)
 
-	return Pokemon{}
+	return pokemon
 }
 
-func CreatePokemon(pokemon Pokemon) {
-	pokemons = append(pokemons, pokemon)
+func CreatePokemon(pokemon Pokemon) Pokemon {
+	dbconn := database.DBConn
+
+	dbconn.Create(&pokemon)
+	return pokemon
 }

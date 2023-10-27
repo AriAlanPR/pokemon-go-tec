@@ -12,6 +12,6 @@ func SetupRoutes(app *fiber.App) {
 	})
 
 	app.Get("/pokemons", controllers.GetPokemons)
-	app.Get("/pokemons/:name", controllers.GetPokemon)
+	app.Get("/pokemons/:id", controllers.GetPokemon)
 	app.Post("/pokemons", controllers.CreatePokemon)
 }

@@ -11,17 +11,23 @@ func GetPokemons(c *fiber.Ctx) {
 }
 
 func GetPokemon(c *fiber.Ctx) {
-	name := c.Params("name")
+	id := c.Params("id")
 
-	c.JSON(models.GetPokemon(name))
+	if pokemon := models.GetPokemon(id); pokemon.ID > 0 {
+		c.JSON(pokemon)
+		return
+	}
+
+	c.Send("Pokemon no encontrado")
 }
 
 func CreatePokemon(c *fiber.Ctx) {
 	var pokemon models.Pokemon
-
-	if err := c.BodyParser(&pokemon); err != nil {
-		c.Status(503).Send(err)
-	}
+	pokemon.Attack = 10
+	pokemon.Defense = 10
+	pokemon.HP = 100
+	pokemon.Name = "Bulbasaur"
+	pokemon.Type = "Grass"
 
 	models.CreatePokemon(pokemon)
 }
